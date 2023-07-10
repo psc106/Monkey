@@ -18,7 +18,7 @@ public class EnviromentSpawner : MonoBehaviour
         env = pool.enviroments.ToArray();
 
         spawnerRate = Random.Range(.1f, 1f);
-        timeAfterSpawn = -3;
+        timeAfterSpawn = spawnerRate;
     }
 
     // Update is called once per frame

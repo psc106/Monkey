@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public Transform bulletPool = default;
+    public Transform effectPool = default;
     public GameObject bulletPrefab = default;
     public Rigidbody playerRigid = default;
 
@@ -66,11 +68,15 @@ public class Player : MonoBehaviour
 
             if (isFire)
             {
+                animator.SetBool("Swim", true);
+                
+
                 fireDelay += Time.deltaTime;
                 if (fireDelay >= 0.1)
                 {
                     GameObject bullet = Instantiate(bulletPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z + 0.5f), Quaternion.identity, bulletPool);
                     bullet.transform.LookAt(transform.forward);
+                    bullet.GetComponent<Bullet>().effectPool = effectPool;
                     fireDelay = 0;
                 }
             }

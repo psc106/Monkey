@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     public float speed = default;
     private Rigidbody bulletRigidbody;
+    public GameObject effect;
+    public Transform effectPool { private get; set; }
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +26,14 @@ public class Bullet : MonoBehaviour
 
             if (enemy != null)
             {
+                Instantiate(effect, transform.position, Quaternion.identity, effectPool);
                 enemy.hp -= 1;
                 Destroy(gameObject);
+                GameManager.myCamera.Shake();
 
-                if(enemy.hp <= 0){
-                    Destroy(other.gameObject);
+
+                if (enemy.hp <= 0){
+                    enemy.Die();
                     GameManager.score += 1;
                 }
             }

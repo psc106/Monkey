@@ -33,6 +33,9 @@ public class Enemy : MonoBehaviour
     public GameObject bulletPrefab = default;
     private Transform target = default;
 
+    private Animator animator;
+    private Rigidbody rb;
+
     void Start()
     {
         Player player = FindAnyObjectByType<Player>();
@@ -42,6 +45,8 @@ public class Enemy : MonoBehaviour
         successMove = false;
         moveTime = 0;
         fireTime = 0;
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
         fireDelay = Random.Range(fireDelayMin, fireDelayMax);
     }
 
@@ -153,5 +158,12 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
 
         }
+    }
+
+    public void Die()
+    {
+        rb.velocity = Vector3.down;
+        animator.Play("Death");
+       Destroy(gameObject, 1f);
     }
 }

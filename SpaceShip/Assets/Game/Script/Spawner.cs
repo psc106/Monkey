@@ -20,12 +20,15 @@ public class Spawner : MonoBehaviour
     {
         queue = new Line[30];
 
+
         queue[queue.Length - 1] = new Line(this, queue.Length - 1);
-        for (int i = queue.Length - 2; i >= 0; i--)
+        for (int i = queue.Length - 2; i >= 1; i--)
         {
             queue[i] = new Line(this, i);
             queue[i].nextLine = queue[i + 1];
         }
+        queue[0] = new Line(this);
+        queue[0].nextLine = queue[1];
 
         Enemies = enemyPool.pools.ToArray();
 
@@ -84,11 +87,18 @@ public class Line
     public Enemy enemy = default;
     public Line nextLine = default;
 
+    public Line(Spawner spawner)
+    {
+        id = spawner.spawnerID;
+        currPos = new Vector3(spawner.transform.position.x, 0f, spawner.transform.position.z);
+        nextPos = new Vector3(spawner.transform.position.x, 0f, -4f);
+    }
+
     public Line(Spawner spawner, int i)
     {
         id = spawner.spawnerID;
-        currPos = new Vector3(spawner.transform.position.x, 0f, spawner.transform.position.z - (i * 4));
-        nextPos = new Vector3(spawner.transform.position.x, 0f, spawner.transform.position.z - ((i + 1) * 4));
+        currPos = new Vector3(spawner.transform.position.x, 0f, 0f - (i * 4));
+        nextPos = new Vector3(spawner.transform.position.x, 0f, 0f - ((i + 1) * 4));
     }
 
 }

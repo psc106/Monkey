@@ -6,9 +6,12 @@ using UnityEngine.SocialPlatforms.Impl;
 public class GameManager : MonoBehaviour
 {
     public GameObject gameoverUI = default;
+    public GameObject playingUI = default;
     public GameObject playScoreText = default;
     public GameObject recordText = default;
     public GameObject scoreText = default;
+    public  MainCamera camera = default;
+    public static MainCamera myCamera = default;
 
     public GameObject[] button = default;
 
@@ -20,6 +23,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myCamera = camera;
         score = 0;
         isGameOver = false;
     }
@@ -87,6 +91,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         isGameOver = true;
+        playingUI.SetActive(false);
         gameoverUI.SetActive(true);
         if (button[0].activeInHierarchy)
         {
